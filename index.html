@@ -9,7 +9,10 @@
     </style>
   </head>
   <body>
-    <button id="connectBtn">Connect</button>
+    <label id="connectBtn">
+      Pair your Bluetooth-capable camera by choosing the "Connect to Wireless Remote" option under Bluetooth settings.<br />
+      <button>Connect</button>
+    </label>
     <div id="shootGroup" class="hidden">
       Take
       <input
@@ -25,7 +28,7 @@
       with delay of
       <input type="number" id="delayInput" min="0" value="0" /> seconds in
       between.<br />
-      <button id="shootBtn" disabled>Shoot</button><br />
+      <button id="shootBtn" disabled>Shoot</button> (make sure your "Shooting method" on camera is set to "Self-timer: 10sec/remote" and the exposure to "Bulb")<br />
       <progress id="progressBar" value="0"></progress
       ><label id="progressLabel" for="progress"></label>
     </div>

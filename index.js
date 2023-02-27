@@ -57,9 +57,7 @@ connectBtn.onclick = async () => {
       ]
     });
     await device.gatt.connect();
-    console.log(device.gatt.connected);
     await timeout(1);
-    console.log(device.gatt.connected);
     device.addEventListener(
       'gattserverdisconnected',
       () => {
@@ -123,3 +121,7 @@ shootBtn.onclick = async () => {
     shootBtn.disabled = false;
   }
 };
+
+if (!navigator.bluetooth?.getDevices) {
+  document.body.textContent = 'Web Bluetooth is not supported in this browser. Please use latest Chromium-based browser.';
+}
