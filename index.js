@@ -76,7 +76,7 @@ connectBtn.onclick = async () => {
     shootCharacteristic = await service.getCharacteristic(UUID_SHOOT);
     onConnectionChange();
   } catch (e) {
-    console.error(e);
+    alert(e);
     device = undefined;
   } finally {
     connectBtn.disabled = false;
