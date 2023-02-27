@@ -48,7 +48,7 @@ addEventListener('beforeunload', () => {
 connectBtn.onclick = async () => {
   connectBtn.disabled = true;
   try {
-    let knownDevices = await navigator.bluetooth.getDevices();
+    let knownDevices = navigator.bluetooth.getDevices ? await navigator.bluetooth.getDevices() : [];
     device = await navigator.bluetooth.requestDevice({
       filters: [
         {
@@ -122,6 +122,6 @@ shootBtn.onclick = async () => {
   }
 };
 
-if (!navigator.bluetooth?.getDevices) {
+if (!navigator.bluetooth) {
   document.body.textContent = 'Web Bluetooth is not supported in this browser. Please use latest Chromium-based browser.';
 }
