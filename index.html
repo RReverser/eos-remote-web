@@ -1,37 +1,126 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Unofficial Web Bluetooth remote for Canon EOS cameras</title>
+    <title>Intervalometer</title>
+    <link
+      rel="icon"
+      href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">⏲️</text></svg>'
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
+      crossorigin="anonymous"
+    />
     <style>
       .hidden {
         display: none;
       }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        text-align: center;
+      }
+
+      main {
+        margin: auto;
+        padding: 5vw;
+        text-align: justify;
+      }
+
+      li {
+        margin-top: 0.5em;
+      }
     </style>
   </head>
   <body>
-    <label id="connectBtn">
-      Pair your Bluetooth-capable camera by choosing the "Connect to Wireless Remote" option under Bluetooth settings.<br />
-      <button>Connect</button>
-    </label>
-    <div id="shootGroup" class="hidden">
-      Take
-      <input
-        type="number"
-        pattern="[0-9]+"
-        id="numberInput"
-        min="1"
-        value="1"
-      />
-      shots,<br />
-      <input type="number" id="exposureInput" min="1" value="1" /> seconds of
-      exposure each and<br />
-      with delay of
-      <input type="number" id="delayInput" min="0" value="0" /> seconds in
-      between.<br />
-      <button id="shootBtn" disabled>Shoot</button> (make sure your "Shooting method" on camera is set to "Self-timer: 10sec/remote" and the exposure to "Bulb")<br />
-      <progress id="progressBar" value="0"></progress
-      ><label id="progressLabel" for="progress"></label>
-    </div>
+    <main>
+      <div id="connectGroup">
+        This is an unofficial
+        <a href="https://developer.chrome.com/articles/bluetooth/"
+          >Web Bluetooth</a
+        >-based intervalometer for Canon cameras by
+        <a href="https://twitter.com/RReverser">@RReverser</a>.<br />
+        <br />
+        Check out the code and description on
+        <a href="https://github.com/RReverser/eos-remote-web">GitHub</a>.
+        <br />
+        <br />
+        If you're comfortable, feel free to try it out with your own
+        Bluetooth-capable Canon camera
+        <strong>(entirely at your own risk!)</strong>:<br />
+        <ol>
+          <li>
+            <a
+              href="https://cam.start.canon/en/C002/manual/html/UG-08_Wi-Fi_0090.html"
+              >Start the Bluetooth remote pair process</a
+            >
+            on your camera.
+          </li>
+          <li>
+            <a
+              href="https://cam.start.canon/en/C002/manual/html/UG-04_AF-Drive_0060.html"
+              >Set your camera</a
+            >
+            to the "Self-timer: 10 sec/remote control" drive mode.
+          </li>
+          <li>
+            <a
+              href="https://cam.start.canon/en/C002/manual/html/UG-03_CustomShooting_0060.html"
+              >Set your camera</a
+            >
+            to the "Bulb" exposure mode.
+          </li>
+          <li>
+            Press <button id="connectBtn">Connect</button> and choose your
+            camera among the shown devices.
+          </li>
+        </ol>
+        <p>
+          Occasionally you might get pairing issues or reconnection issues, e.g.
+          after camera got asleep.
+        </p>
+        <p>
+          When that happens, I found it helpful to "Delete connection
+          information" on the camera, restart it and go through the pairing
+          process again.
+        </p>
+      </div>
+      <div id="shootGroup" class="hidden">
+        <form class="pure-form pure-form-aligned">
+          <fieldset>
+            <legend>Intervalometer</legend>
+            <div class="pure-control-group">
+              <label for="numberInput">Number of shots</label>
+              <input
+                type="number"
+                id="numberInput"
+                min="1"
+                value="1"
+                pattern="[0-9]+"
+              />
+            </div>
+            <div class="pure-control-group">
+              <label for="exposureInput">Exposure time (seconds)</label>
+              <input type="number" id="exposureInput" min="1" value="1" />
+            </div>
+            <div class="pure-control-group">
+              <label for="delayInput">Delay between shots (seconds)</label>
+              <input type="number" id="delayInput" min="1" value="1" />
+            </div>
+            <div class="pure-controls">
+              <button id="shootBtn" type="button">Start</button><br />
+              <progress
+                id="progressBar"
+                value="0"
+                style="visibility: hidden"
+              ></progress>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </main>
     <script src="index.js"></script>
   </body>
 </html>

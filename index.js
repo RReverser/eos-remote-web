@@ -33,10 +33,8 @@ let shootCharacteristic;
 
 function onConnectionChange() {
   let isConnected = !!device;
-  connectBtn.classList.toggle('hidden', isConnected);
+  connectGroup.classList.toggle('hidden', isConnected);
   shootGroup.classList.toggle('hidden', !isConnected);
-  connectBtn.disabled = isConnected;
-  shootBtn.disabled = !isConnected;
 }
 
 addEventListener('beforeunload', () => {
@@ -48,7 +46,6 @@ addEventListener('beforeunload', () => {
 connectBtn.onclick = async () => {
   connectBtn.disabled = true;
   try {
-    let knownDevices = navigator.bluetooth.getDevices ? await navigator.bluetooth.getDevices() : [];
     device = await navigator.bluetooth.requestDevice({
       filters: [
         {
@@ -69,10 +66,8 @@ connectBtn.onclick = async () => {
       }
     );
     let service = await device.gatt.getPrimaryService(UUID_SERVICE);
-    if (!knownDevices.find(other => device.id === other.id)) {
-      let pairCharacteristic = await service.getCharacteristic(UUID_PAIR);
-      await pairCharacteristic.writeValue(remoteName);
-    }
+    let pairCharacteristic = await service.getCharacteristic(UUID_PAIR);
+    await pairCharacteristic.writeValue(remoteName);
     shootCharacteristic = await service.getCharacteristic(UUID_SHOOT);
     onConnectionChange();
   } catch (e) {
@@ -94,6 +89,7 @@ async function pressBtn() {
 
 shootBtn.onclick = async () => {
   shootBtn.disabled = true;
+  progressBar.style.visibility = 'visible';
 
   try {
     let number = numberInput.valueAsNumber;
@@ -105,11 +101,11 @@ shootBtn.onclick = async () => {
 
     for (let i = 1; i <= number; i++) {
       if (i !== 1) {
-        progressLabel.textContent = `Waiting after shot #${i}/${number}`;
+        shootBtn.textContent = `Waiting after shot #${i}/${number}`;
         await timeout(delay);
         progressBar.value += delay;
       }
-      progressLabel.textContent = `Shooting #${i}/${number}`;
+      shootBtn.textContent = `Shooting #${i}/${number}`;
       console.group(`Shot ${i}`);
       await pressBtn();
       await timeout(exposure);
@@ -117,11 +113,15 @@ shootBtn.onclick = async () => {
       progressBar.value += exposure;
       console.groupEnd(`Shot ${i}`);
     }
+  } catch (e) {
+    alert(e);
   } finally {
+    shootBtn.textContent = 'Start';
     shootBtn.disabled = false;
   }
 };
 
 if (!navigator.bluetooth) {
-  document.body.textContent = 'Web Bluetooth is not supported in this browser. Please use latest Chromium-based browser.';
+  document.body.textContent =
+    'Web Bluetooth is not supported in this browser. Please use latest Chromium-based browser.';
 }
