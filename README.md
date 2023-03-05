@@ -7,6 +7,10 @@ This is a [Web Bluetooth](https://developer.chrome.com/articles/bluetooth/)-base
 
 ## Disclaimers
 
+First of all, this project is in no way affiliated with Canon and you use it at your own risk.
+
 It mostly works, but I'm having an issue where, once camera goes to sleep, it can't connect again and needs to be unpaired, power-cycled & paired again - still not sure whether that's just my camera or the implementation should be doing some kind of regular pings to keep connection alive.
 
-**NOTE:** This project is in no way affiliated with Canon and you use it at your own risk.
+## See also
+
+[web-gphoto2](https://github.com/GoogleChromeLabs/web-gphoto2) - my other project controlling arbitrary cameras over the cable, powered by gphoto2, WebAssembly and WebUSB. 
