@@ -1,4 +1,4 @@
-#  Unofficial Web Bluetooth remote for Canon EOS cameras
+#  Unofficial Web Bluetooth remote for Canon cameras
 
 This is a [Web Bluetooth](https://developer.chrome.com/articles/bluetooth/)-based implementation of remote control for Canon EOS cameras based on [prior reverse engineering work](https://iandouglasscott.com/2017/09/04/reverse-engineering-the-canon-t7i-s-bluetooth-work-in-progress/) by [Ian Douglas Scott](https://fosstodon.org/@ids1024).
 
