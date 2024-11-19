@@ -10,16 +10,16 @@ const UUID_SERVICE = '00050000-0000-1000-0000-d8492fffa821',
   UUID_PAIR = '00050002-0000-1000-0000-d8492fffa821',
   UUID_SHOOT = '00050003-0000-1000-0000-d8492fffa821';
 
-function encodeRemoteName(name) {
+function encodePairCommand(name) {
   let result = new Uint8Array(name.length + 1);
-  result[0] = name.length;
+  result[0] = 3;
   for (let i = 0; i < name.length; i++) {
     result[i + 1] = name.charCodeAt(i);
   }
   return result;
 }
 
-const remoteName = encodeRemoteName('Web');
+const pairCmd = encodePairCommand('Web');
 
 function timeout(sec) {
   return new Promise(resolve => setTimeout(resolve, sec * 1000));
@@ -67,7 +67,7 @@ connectBtn.onclick = async () => {
     );
     let service = await device.gatt.getPrimaryService(UUID_SERVICE);
     let pairCharacteristic = await service.getCharacteristic(UUID_PAIR);
-    await pairCharacteristic.writeValue(remoteName);
+    await pairCharacteristic.writeValue(pairCmd);
     shootCharacteristic = await service.getCharacteristic(UUID_SHOOT);
     onConnectionChange();
   } catch (e) {
